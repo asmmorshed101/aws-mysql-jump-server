@@ -74,7 +74,7 @@
  8. And also type
    ```bash
     pulumi stack rm dev
-    ```
+   ```
   ![Alt text](images/10.%20pulumi%20destroy.png)
 
 
