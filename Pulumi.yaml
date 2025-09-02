@@ -1,0 +1,11 @@
+name: mysql-aws-pulumi
+description: This is for assignment
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-python
