@@ -129,6 +129,11 @@ ami_id = 'ami-060e277c0d4cce553'
 # User Data script for User Creation and roo user access off
 
 user_data_script = """#!/bin/bash
+
+# Update packages and install mysql-client
+apt-get update -y
+apt-get install -y mysql-client
+
 # Create ops user with sudo privileges
 adduser --disabled-password --gecos "" ops
 mkdir -p /home/ops/.ssh
@@ -208,7 +213,10 @@ private_security_group = aws.ec2.SecurityGroup("private-secgrp",
     vpc_id=vpc.id,
     description='Enable SSH access for private instance',
     ingress=[
-        {'protocol': 'tcp', 'from_port': 22, 'to_port': 22, 'security_groups': [public_security_group.id]}
+        {'protocol': 'tcp', 'from_port': 22, 'to_port': 22, 'security_groups': [public_security_group.id]},
+        # MySQL from public security group
+        {'protocol': 'tcp', 'from_port': 3306, 'to_port': 3306, 'security_groups': [public_security_group.id]}
+   
     ],
     egress=[
         {'protocol': '-1', 'from_port': 0, 'to_port': 0, 'cidr_blocks': ['0.0.0.0/0']}
